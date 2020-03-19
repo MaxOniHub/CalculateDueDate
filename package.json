@@ -1,0 +1,30 @@
+{
+  "name": "homework.dev",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MaxOniHub/CalculateDueDate.git"
+  },
+  "author": "MaxOni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MaxOniHub/CalculateDueDate/issues"
+  },
+  "homepage": "https://github.com/MaxOniHub/CalculateDueDate#readme",
+  "devDependencies": {
+    "mocha": "^7.1.1",
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-group-routes": "^1.1.0",
+    "express-validator": "^6.4.0"
+  }
+}
