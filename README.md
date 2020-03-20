@@ -1,4 +1,4 @@
-# CalculateDueDate
+# Due Date Calculator
 
 # Endpoint
 POST https://due-date-calculator-test-app.herokuapp.com/tools/calc
