@@ -57,7 +57,6 @@ class DueDate
     var minutes = date.getMinutes();
 
     if (hours == this._endWorkAtHours && minutes >= 0) {
-      console.log(hours)
       return false;
     }
 
@@ -68,9 +67,6 @@ class DueDate
   isHoliday() {
       const date = new Date(this.date)
       var weekday = date.getDay()
-
-      console.log(weekday)
-
       var isWorkingDay = inRange(weekday, {start: this._startWorkAtDay, end: this._endWorkAtDay})
 
       return !isWorkingDay

@@ -13,13 +13,13 @@ describe('Testing model level.', function(){
        assert.equal(true, model.isWorkingHours());
      })
 
-     it('Workig hours scenario. Work day was over a few minutes ago.', function(){
+     it('Workig hours scenario. Workday has just ended', function(){
         var model = new DueDate("2020-03-19 05:01 PM", 16);
         assert.equal(false, model.isWorkingHours());
       })
 
 
-     it('Workig hours scenario. A deep night already, no work today.', function(){
+     it('Workig hours scenario. It\'s time to sleep, no work today.', function(){
         var model = new DueDate("2020-03-19 10:00 PM", 16);
         assert.equal(false, model.isWorkingHours());
       })
