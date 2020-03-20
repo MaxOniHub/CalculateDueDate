@@ -3,6 +3,7 @@ const router = Router()
 const { check, validationResult } = require('express-validator')
 const errorFormatter = require('../helpers/ErrorFormatter')
 const DueDate = require('../models/DueDate')
+const DueDateService = require('../services/DueDateService')
 
 router.post("/calc",
   function(req, res) {
@@ -13,7 +14,11 @@ router.post("/calc",
       }
 
     const dueDateModel = new DueDate(req.body.date, req.body.turnaroundTime)
-    res.send('NOT IMPLEMENTED: due date');
+
+    console.log(dueDateModel.isWorkingHours());
+    const dueDateService = new DueDateService
+
+    res.send(dueDateService.calculateDueDate(dueDateModel));
   })
 
 module.exports = router
