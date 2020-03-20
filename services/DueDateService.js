@@ -1,4 +1,5 @@
 const dateTimeConverter = require('../helpers/DateTimeHelper')
+const DueDate = require('../models/DueDate')
 const math = require("mathjs")
 
 class DueDateService {
@@ -56,11 +57,11 @@ class DueDateService {
     for (var i=0; i < workingDays; ++i) {
         var hours = this._hoursTillWorksDayEnds(date, dueDate.endWorkAtHours)
           for (var j=1; j < hours+1; ++j) {
-
                 date = dateTimeConverter.addHours(date, 1)
                 workingDaysInHours--;
           }
-          date = dateTimeConverter.addDays(date, 1, {"hours": dueDate.startWorkAtHours, "minutes": dateTimeConverter.parseTimeByMinutes(date)})
+          // take next working day
+          date = this._getNextDate(date, dueDate.startWorkAtHours, dateTimeConverter.parseTimeByMinutes(date))
       }
 
       if (workingDaysInHours === 0) {
@@ -80,6 +81,17 @@ class DueDateService {
       }
       return 0
   }
+
+  _getNextDate(date, predefinedHours, predefinedMinutes) {
+     date = dateTimeConverter.addDays(date, 1, {"hours": predefinedHours, "minutes": predefinedMinutes})
+     var model = new DueDate(date, 1)
+     if (model.isHoliday()) {
+       return this._getNextDate(date, predefinedHours, predefinedMinutes)
+     } else {
+       return date
+     }
+  }
+
 
 }
 

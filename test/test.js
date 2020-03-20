@@ -79,6 +79,15 @@ describe('Testing service level.', function(){
          })
 
 
+         it('Add hours scenario. An issue was reported on Friday, Saturday and Sunday should be ignored. ',
+         function(){
+            var model = new DueDate("2020-03-20 04:00 PM", 2);
+            var serive = new DueDateService
+
+            assert.equal("03/23/2020 10:00 AM", serive.calculateDueDate(model));
+          })
+
+
 })
 
 
