@@ -24,17 +24,28 @@ class DueDateService {
     var hoursToResolve = dueDate.turnaroundTime
 
     if (this._hoursTillWorksDayEnds(dueDate) < dueDate.turnaroundTime) {
+
         hoursToResolve -= dueDate.workingDay()
+
+        if (hoursToResolve < dueDate.workingDay()) {
+          return 24 - dueDate.workingDay();
+        }
+        return math.ceil((hoursToResolve / dueDate.workingDay())) * 24 + dueDate.workingDay()
     }
 
-    return math.ceil((hoursToResolve / dueDate.workingDay())) * 24 + dueDate.workingDay()
+    if (this._hoursTillWorksDayEnds(dueDate) == 1) {
+        return 24 - dueDate.workingDay();
+    }
+  
+    return 0
+
   }
 
   _hoursTillWorksDayEnds(dueDate) {
       var endWorkDayHours = dueDate.endWorkAtHours
       var currentTime = dateTimeConverter.parseTime(dueDate.date)
 
-      if (currentTime <= endWorkDayHours) {
+      if (currentTime < endWorkDayHours) {
         return endWorkDayHours - currentTime
       }
       return 0

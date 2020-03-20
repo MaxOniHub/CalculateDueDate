@@ -13,7 +13,13 @@ describe('Testing model level.', function(){
        assert.equal(true, model.isWorkingHours());
      })
 
-     it('Workig hours scenario. Should return `false`.', function(){
+     it('Workig hours scenario. Work day was over a few minutes ago.', function(){
+        var model = new DueDate("2020-03-19 05:01 PM", 16);
+        assert.equal(false, model.isWorkingHours());
+      })
+
+
+     it('Workig hours scenario. A deep night already, no work today.', function(){
         var model = new DueDate("2020-03-19 10:00 PM", 16);
         assert.equal(false, model.isWorkingHours());
       })
@@ -34,12 +40,35 @@ describe('Testing model level.', function(){
 
  // SERVICE LEVEL
 describe('Testing service level.', function(){
-    it('Add hours scenario. Should return `true`', function(){
+    it('Add hours scenario. 3 hours to spend today, 8 hours to spend tomorrow and the rest work should be done till 02:12 PM of the next day (03/)',
+    function(){
        var model = new DueDate("2020-03-17 02:12 PM", 16);
        var serive = new DueDateService
 
        assert.equal("03/19/2020 02:12 PM", serive.calculateDueDate(model));
      })
+
+     it('Add hours scenario. The issue should be solved by the end of the day.', function(){
+        var model = new DueDate("2020-03-17 11:00 AM", 5);
+        var serive = new DueDateService
+
+        assert.equal("03/17/2020 04:00 PM", serive.calculateDueDate(model));
+      })
+
+      it('Add hours scenario. The most part of work should be done today and spend 1 hour tomorrow morning.', function(){
+         var model = new DueDate("2020-03-17 09:00 AM", 9);
+         var serive = new DueDateService
+
+         assert.equal("03/18/2020 10:00 AM", serive.calculateDueDate(model));
+       })
+
+       it('Add hours scenario. One minute is left before end of the work day, but there is a small issue reported. Better to fix it tomorrow morning',
+       function(){
+          var model = new DueDate("2020-03-17 04:59 PM", 1);
+          var serive = new DueDateService
+
+          assert.equal("03/18/2020 09:59 AM", serive.calculateDueDate(model));
+        })
 
 })
 

@@ -54,8 +54,15 @@ class DueDate
   isWorkingHours() {
     const date = new Date(this.date)
     var hours = date.getHours()
+    var minutes = date.getMinutes();
+
+    if (hours == this._endWorkAtHours && minutes >= 0) {
+      console.log(hours)
+      return false;
+    }
 
     return inRange(hours, {start: this._startWorkAtHours, end: this._endWorkAtHours})
+
   }
 
   isHoliday() {
