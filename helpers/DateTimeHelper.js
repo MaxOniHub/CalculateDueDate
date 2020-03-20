@@ -31,8 +31,12 @@ function addDays(date, days, defaultTime = {"hours": 0, "minutes": 0}) {
   var dateTime = new Date(date);
 
   dateTime.setDate(dateTime.getDate() + days);
-  dateTime.setHours(defaultTime.hours)
-  dateTime.setMinutes(defaultTime.minutes)
+
+  if (defaultTime.hours !==0) {
+    dateTime.setHours(defaultTime.hours)
+    dateTime.setMinutes(defaultTime.minutes)
+  }
+
   var twelveOclockFormat =  convertTimeTo12(dateTime);
 
   var monthFormatted = numberWithLeadingZeros(dateTime.getMonth()+1)
