@@ -42,7 +42,6 @@ class DueDateService {
   _handleMultiDays(dueDate) {
     var hoursToResolve = dueDate.turnaroundTime
     var multiplier = 24
-    var tempDate = dueDate.date
     var workingDays = parseInt((dueDate.turnaroundTime / dueDate.workingDay()))
     var leftHours = dueDate.turnaroundTime / dueDate.workingDay() - workingDays;
     var workingDaysInHours = workingDays * dueDate.workingDay()
