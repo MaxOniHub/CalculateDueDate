@@ -14,17 +14,9 @@ function convertTimeTo12(dateTime)
 function addHours(date, hours)
 {
   var dateTime = new Date(date);
-
   dateTime.setHours(dateTime.getHours() + hours);
-  var twelveOclockFormat =  convertTimeTo12(dateTime);
 
-  var monthFormatted = numberWithLeadingZeros(dateTime.getMonth()+1)
-  var dateFormatted  = numberWithLeadingZeros(dateTime.getDate())
-  var timeFormatted  = twelveOclockFormat
-  var yearFormatted  = dateTime.getFullYear()
-
-  // e.g. 03/02/2020 03:10 PM
-  return monthFormatted + '/' + dateFormatted + '/' + yearFormatted +' '+ timeFormatted
+  return formatDateTime(dateTime)
 }
 
 function addDays(date, days, defaultTime = {"hours": 0, "minutes": 0}) {
@@ -37,15 +29,7 @@ function addDays(date, days, defaultTime = {"hours": 0, "minutes": 0}) {
     dateTime.setMinutes(defaultTime.minutes)
   }
 
-  var twelveOclockFormat =  convertTimeTo12(dateTime);
-
-  var monthFormatted = numberWithLeadingZeros(dateTime.getMonth()+1)
-  var dateFormatted  = numberWithLeadingZeros(dateTime.getDate())
-  var timeFormatted  = twelveOclockFormat
-  var yearFormatted  = dateTime.getFullYear()
-
-  // e.g. 03/02/2020 03:10 PM
-  return monthFormatted + '/' + dateFormatted + '/' + yearFormatted +' '+ twelveOclockFormat
+  return formatDateTime(dateTime)
 }
 
 function parseTime(dateTime) {
@@ -56,6 +40,18 @@ function parseTime(dateTime) {
 function parseTimeByMinutes(dateTime) {
   var dateTime = new Date(dateTime);
   return dateTime.getMinutes()
+}
+
+function formatDateTime(dateTime) {
+  var twelveOclockFormat =  convertTimeTo12(dateTime);
+
+  var monthFormatted = numberWithLeadingZeros(dateTime.getMonth()+1)
+  var dateFormatted  = numberWithLeadingZeros(dateTime.getDate())
+  var yearFormatted  = dateTime.getFullYear()
+  var timeFormatted  = twelveOclockFormat
+
+  // e.g. 03/02/2020 03:10 PM
+  return monthFormatted + '/' + dateFormatted + '/' + yearFormatted +' '+ timeFormatted
 }
 
 
