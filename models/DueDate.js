@@ -4,30 +4,69 @@ const inRange = require('in-range');
 class DueDate
 {
 
+  _startWorkAtDay = 1; // from Monday
+  _endWorkAtDay = 5; // till Friday
+
   constructor(date, turnaroundTime) {
-     this.date = date
-     this.turnaroundTime = turnaroundTime
-     this.startWorkAt = '9';
-     this.endWorkAt = '17'
+     this._date = date
+     this._turnaroundTime = turnaroundTime
+     this._startWorkAtHours = 9;
+     this._endWorkAtHours = 17;
   }
 
-  getStartWorkAt() {
-    return  parseInt(this.startWorkAt)
+  workingDay() {
+    return this._endWorkAtHours - this._startWorkAtHours
   }
 
-  getEndWorkAt() {
-     return parseInt(this.endWorkAt)
+  get startWorkAtHours() {
+    return this._startWorkAtHours
+  }
+
+  set startWorkAtHours(value) {
+    this._startWorkAtHours = value
+  }
+
+  get endWorkAtHours() {
+    return this._endWorkAtHours
+  }
+
+  set endWorkAtHours(value) {
+    this._endWorkAtHours = value
+  }
+
+  get date()
+  {
+    return this._date
+  }
+
+  set date(value) {
+    this._date = value
+  }
+
+  get turnaroundTime() {
+    return this._turnaroundTime
+  }
+
+  set turnaroundTime(value) {
+      this._turnaroundTime = value
   }
 
   isWorkingHours() {
     const date = new Date(this.date)
     var hours = date.getHours()
 
-    return inRange(hours, {start: this.getStartWorkAt(), end: this.getEndWorkAt()})
+    return inRange(hours, {start: this._startWorkAtHours, end: this._endWorkAtHours})
   }
 
   isHoliday() {
+      const date = new Date(this.date)
+      var weekday = date.getDay()
 
+      console.log(weekday)
+
+      var isWorkingDay = inRange(weekday, {start: this._startWorkAtDay, end: this._endWorkAtDay})
+
+      return !isWorkingDay
   }
 
 }

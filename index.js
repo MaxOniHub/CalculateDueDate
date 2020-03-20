@@ -11,10 +11,9 @@ app.use(bodyParser.json());
 // add custom routes
 app.use('/tools', toolsRouter)
 
-//app.group("/api/v1", (router) => {});
-
 // init port
 const PORT = process.env.PORT || 3000
+
 
 app.listen(PORT, function () {
   console.log(`Server is running on port ${PORT}!`);
