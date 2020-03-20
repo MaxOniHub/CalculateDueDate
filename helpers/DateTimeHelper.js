@@ -27,10 +27,33 @@ function addHours(date, hours)
   return monthFormatted + '/' + dateFormatted + '/' + yearFormatted +' '+ timeFormatted
 }
 
+function addDays(date, days, defaultTime = {"hours": 0, "minutes": 0}) {
+  var dateTime = new Date(date);
+
+  dateTime.setDate(dateTime.getDate() + days);
+  dateTime.setHours(defaultTime.hours)
+  dateTime.setMinutes(defaultTime.minutes)
+  var twelveOclockFormat =  convertTimeTo12(dateTime);
+
+  var monthFormatted = numberWithLeadingZeros(dateTime.getMonth()+1)
+  var dateFormatted  = numberWithLeadingZeros(dateTime.getDate())
+  var timeFormatted  = twelveOclockFormat
+  var yearFormatted  = dateTime.getFullYear()
+
+  // e.g. 03/02/2020 03:10 PM
+  return monthFormatted + '/' + dateFormatted + '/' + yearFormatted +' '+ twelveOclockFormat
+}
+
 function parseTime(dateTime) {
   var dateTime = new Date(dateTime);
   return dateTime.getHours()
 }
+
+function parseTimeByMinutes(dateTime) {
+  var dateTime = new Date(dateTime);
+  return dateTime.getMinutes()
+}
+
 
 //e.g. 1:3 PM to 01:03 PM
 // 3/1/2020 to 03/01/2020
@@ -41,3 +64,5 @@ function numberWithLeadingZeros(value) {
 module.exports.convertTimeTo12 = convertTimeTo12;
 module.exports.addHours = addHours;
 module.exports.parseTime = parseTime;
+module.exports.addDays = addDays;
+module.exports.parseTimeByMinutes = parseTimeByMinutes;

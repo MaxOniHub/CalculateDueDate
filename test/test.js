@@ -70,6 +70,15 @@ describe('Testing service level.', function(){
           assert.equal("03/18/2020 09:59 AM", serive.calculateDueDate(model));
         })
 
+        it('Add hours scenario. A few days if development ',
+        function(){
+           var model = new DueDate("2020-03-17 09:00 AM", 24);
+           var serive = new DueDateService
+
+           assert.equal("03/20/2020 09:00 AM", serive.calculateDueDate(model));
+         })
+
+
 })
 
 
