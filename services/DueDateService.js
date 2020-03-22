@@ -18,7 +18,7 @@ class DueDateService {
 
     // handle main logic
   _addHours(dueDate) {
-    if (dueDate.turnaroundTime > this._hoursTillWorkDayEnds(dueDate.date, dueDate.endWorkAtHours))  {
+    if (dueDate.turnaroundTime > this._hoursTillWorksDayEnds(dueDate.date, dueDate.endWorkAtHours))  {
         return this._handleMultiDays(dueDate)
     } else {
         return this._handleSingleDay(dueDate)
@@ -29,10 +29,10 @@ class DueDateService {
   // Single day case
   _handleSingleDay(dueDate) {
       var workingDays = parseInt((dueDate.turnaroundTime / dueDate.workingDay()))
-      var leftHours = dueDate.turnaroundTime / dueDate.workingDay() - workingDays;
-      var hoursToEnd = this._hoursTillWorkDayEnds(dueDate.date, dueDate.endWorkAtHours)
+      var leftHours = (dueDate.turnaroundTime / dueDate.workingDay() - workingDays) * dueDate.workingDay();
+      var hoursToEnd = this._hoursTillWorksDayEnds(dueDate.date, dueDate.endWorkAtHours)
 
-      if (hoursToEnd > leftHours *  dueDate.workingDay()) {
+      if (hoursToEnd >= leftHours) {
           return dateTimeConverter.addHours(dueDate.date, dueDate.turnaroundTime)
       }
 
@@ -45,21 +45,20 @@ class DueDateService {
     var multiplier = 24
     var workingDays = parseInt((dueDate.turnaroundTime / dueDate.workingDay()))
     var leftHours = dueDate.turnaroundTime / dueDate.workingDay() - workingDays;
-    var workingDaysInHours = workingDays * dueDate.workingDay()
+    var workingDaysInHours = (workingDays + leftHours) * dueDate.workingDay()
+    var date = dueDate.date;
 
     if (workingDays == 0 && leftHours >= 0) {
-        workingDaysInHours = leftHours * dueDate.workingDay();
         workingDays = 1;
     }
 
-    var date = dueDate.date;
-
     for (var i=0; i < workingDays; ++i) {
-        var hours = this._hoursTillWorkDayEnds(date, dueDate.endWorkAtHours)
+        var hours = this._hoursTillWorksDayEnds(date, dueDate.endWorkAtHours)
           for (var j=1; j < hours+1; ++j) {
                 date = dateTimeConverter.addHours(date, 1)
                 workingDaysInHours--;
           }
+
           // take next working day skipping holidays
           date = this._getNextDate(date, dueDate.startWorkAtHours, dateTimeConverter.parseTimeByMinutes(date))
       }
@@ -72,7 +71,7 @@ class DueDateService {
       return date
   }
 
-  _hoursTillWorkDayEnds(date, workEndAt) {
+  _hoursTillWorksDayEnds(date, workEndAt) {
 
       var currentTime = dateTimeConverter.parseTime(date)
 
@@ -91,7 +90,6 @@ class DueDateService {
        return date
      }
   }
-
 
 }
 

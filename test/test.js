@@ -62,12 +62,12 @@ describe('Testing service level.', function(){
          assert.equal("03/18/2020 10:00 AM", serive.calculateDueDate(model));
        })
 
-       it('Add hours scenario. One minute is left before end of the work day, but there is a small issue reported. Better to fix it tomorrow morning',
-       function(){
-          var model = new DueDate("2020-03-17 04:59 PM", 1);
+
+       it('Add hours scenario.', function(){
+          var model = new DueDate("2020-03-17 02:00 PM", 9);
           var serive = new DueDateService
 
-          assert.equal("03/18/2020 10:59 AM", serive.calculateDueDate(model));
+          assert.equal("03/18/2020 03:00 PM", serive.calculateDueDate(model));
         })
 
         it('Add hours scenario. A few days if development ',
@@ -86,6 +86,22 @@ describe('Testing service level.', function(){
 
             assert.equal("03/23/2020 10:00 AM", serive.calculateDueDate(model));
           })
+
+          it('Add hours scenario. Issue should be done by the end of the day',
+          function(){
+             var model = new DueDate("2020-03-20 02:00 PM", 3);
+             var serive = new DueDateService
+
+             assert.equal("03/20/2020 05:00 PM", serive.calculateDueDate(model));
+           })
+
+           //   it('Add hours scenario. One minute is left before end of the work day, but there is a small issue reported. Better to fix it tomorrow morning',
+           //   function(){
+             //    var model = new DueDate("2020-03-17 04:59 PM", 1);
+             //    var serive = new DueDateService
+
+           //      assert.equal("03/18/2020 10:59 AM", serive.calculateDueDate(model));
+           //    })
 
 
 })
