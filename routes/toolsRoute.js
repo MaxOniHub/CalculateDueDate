@@ -1,7 +1,16 @@
 const {Router} = require('express')
 const router = Router()
-const toolsController = require('../controllers/toolsController')
+const DueDate = require("../models/DueDate")
+const DueDateService = require('../services/DueDateService')
 
-router.post("/calc", toolsController.calculateDueDate)
+router.post("/calc",function(req, res) {
+  const dueDateModel = new DueDate(req.body.date, req.body.turnaroundTime)
+  const dueDateService = new DueDateService
+
+  const result = dueDateService.calculateDueDate(dueDateModel)
+
+  res.send(result +"");
+});
+
 
 module.exports = router
