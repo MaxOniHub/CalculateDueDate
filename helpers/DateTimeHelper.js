@@ -1,57 +1,60 @@
 
-function convertTimeTo12(dateTime)
-{
-  var hours = dateTime.getHours() ; // gives the value in 24 hours format
-  var AmOrPm = hours >= 12 ? 'PM' : 'AM';
-  hours = (hours % 12) || 12;
-  var minutes = numberWithLeadingZeros(dateTime.getMinutes()) ;
-  hours = numberWithLeadingZeros(hours)
+function convertTimeTo12(dateTime) {
+  let hours = dateTime.getHours(); // gives the value in 24 hours format
+  let AmOrPm = hours >= 12 ? 'PM' : 'AM';
 
-  var finalTime = hours + ":" + minutes + " " + AmOrPm;
-  return finalTime
+  hours = (hours % 12) || 12;
+
+  let minutes = numberWithLeadingZeros(dateTime.getMinutes());
+
+  hours = numberWithLeadingZeros(hours);
+  let finalTime = hours + ":" + minutes + " " + AmOrPm;
+
+  return finalTime;
 }
 
-function addHours(date, hours)
-{
-  var dateTime = new Date(date);
+function addHours(date, hours) {
+  const dateTime = new Date(date);
   dateTime.setHours(dateTime.getHours() + hours);
 
-  return formatDateTime(dateTime)
+  return formatDateTime(dateTime);
 }
 
 function addDays(date, days, defaultTime = {"hours": 0, "minutes": 0}) {
-  var dateTime = new Date(date);
+  const dateTime = new Date(date);
 
   dateTime.setDate(dateTime.getDate() + days);
 
-  if (defaultTime.hours !==0) {
-    dateTime.setHours(defaultTime.hours)
-    dateTime.setMinutes(defaultTime.minutes)
+  if (defaultTime.hours !== 0) {
+    dateTime.setHours(defaultTime.hours);
+    dateTime.setMinutes(defaultTime.minutes);
   }
 
-  return formatDateTime(dateTime)
+  return formatDateTime(dateTime);
 }
 
 function parseTime(dateTime) {
-  var dateTime = new Date(dateTime);
-  return dateTime.getHours()
+  const _dateTime = new Date(dateTime);
+
+  return _dateTime.getHours();
 }
 
 function parseTimeByMinutes(dateTime) {
-  var dateTime = new Date(dateTime);
-  return dateTime.getMinutes()
+  const _dateTime = new Date(dateTime);
+
+  return _dateTime.getMinutes();
 }
 
 function formatDateTime(dateTime) {
-  var twelveOclockFormat =  convertTimeTo12(dateTime);
+  let twelveOclockFormat =  convertTimeTo12(dateTime);
 
-  var monthFormatted = numberWithLeadingZeros(dateTime.getMonth()+1)
-  var dateFormatted  = numberWithLeadingZeros(dateTime.getDate())
-  var yearFormatted  = dateTime.getFullYear()
-  var timeFormatted  = twelveOclockFormat
+  let monthFormatted = numberWithLeadingZeros(dateTime.getMonth()+1);
+  let dateFormatted  = numberWithLeadingZeros(dateTime.getDate());
+  let yearFormatted  = dateTime.getFullYear();
+  let timeFormatted  = twelveOclockFormat;
 
   // e.g. 03/02/2020 03:10 PM
-  return monthFormatted + '/' + dateFormatted + '/' + yearFormatted +' '+ timeFormatted
+  return monthFormatted + '/' + dateFormatted + '/' + yearFormatted +' '+ timeFormatted;
 }
 
 
